@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajay | AI Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #00f0ff;
+            --secondary: #7928ca;
+            --dark: #0a0a0a;
+            --light: #fafafa;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .card-glass {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 240, 255, 0.1);
+        }
+        
+        .tech-icon {
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.3));
+        }
+        
+        .tech-icon:hover {
+            transform: translateY(-5px);
+            filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.6));
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .active-nav::after {
+            width: 100%;
+        }
+        
+        .skill-bar {
+            height: 6px;
+            border-radius: 3px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .skill-progress {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .project-overlay {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.9);
+            padding: 24px;
+            transition: all 0.4s ease;
+        }
+        
+        .project-card:hover .project-overlay {
+            bottom: 0;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 240, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .circuit-pattern {
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(0, 240, 255, 0.1) 1px, transparent 0);
+            background-size: 30px 30px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 grid-pattern">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold gradient-text tracking-tighter">AJAY_AI</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link active-nav text-sm font-medium uppercase tracking-wider">HOME</a>
+                    <a href="#about" class="nav-link text-sm font-medium uppercase tracking-wider">ABOUT</a>
+                    <a href="#expertise" class="nav-link text-sm font-medium uppercase tracking-wider">EXPERTISE</a>
+                    <a href="#projects" class="nav-link text-sm font-medium uppercase tracking-wider">PROJECTS</a>
+                    <a href="#contact" class="nav-link text-sm font-medium uppercase tracking-wider">CONTACT</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden card-glass mt-2 rounded-lg mx-4">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-sm font-medium">About</a>
+                <a href="#expertise" class="block px-3 py-2 rounded-md text-sm font-medium">Expertise</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20 pb-16 circuit-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <div class="text-sm font-medium text-gray-400 mb-4 flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-gradient-to-r from-primary to-secondary mr-2"></div>
+                        AI DEVELOPER & RESEARCHER
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                        Building <span class="gradient-text">Intelligent</span><br>
+                        Systems
+                    </h1>
+                    <p class="text-lg mb-8 text-gray-400 max-w-lg">
+                        I design and implement cutting-edge AI solutions that learn, adapt, and transform businesses through machine intelligence.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="px-8 py-3 gradient-bg hover:opacity-90 rounded-lg font-medium transition duration-300 flex items-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Let's Collaborate
+                        </a>
+                        <a href="#projects" class="px-8 py-3 border border-gray-700 hover:bg-gray-900 rounded-lg font-medium transition duration-300 flex items-center">
+                            <i class="fas fa-code mr-2"></i> View Work
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center relative">
+                    <div class="relative w-72 h-72 md:w-96 md:h-96">
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20 blur-3xl"></div>
+                        <div class="absolute inset-0 rounded-full pulse"></div>
+                        <div class="relative w-full h-full rounded-full overflow-hidden border-4 border-gray-800 floating">
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-70"></div>
+                            <img src="https://plus.unsplash.com/premium_photo-1683120963435-6f9355d4a776?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fEFJfGVufDB8fDB8fHww" 
+                                 alt="Ajay" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-5 left-0 card-glass px-6 py-3 rounded-full">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full mr-2 animate-pulse"></div>
+                            <span class="text-sm font-medium">Currently working on AI research</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center mb-16">
+                <div class="h-px bg-gradient-to-r from-transparent via-primary to-transparent flex-1"></div>
+                <h2 class="text-4xl font-bold mx-6 gradient-text">About Me</h2>
+                <div class="h-px bg-gradient-to-r from-transparent via-primary to-transparent flex-1"></div>
+            </div>
+            
+            <div class="card-glass rounded-2xl p-8 md:p-12">
+                <div class="flex flex-col lg:flex-row items-center">
+                    <div class="lg:w-1/3 mb-12 lg:mb-0 flex justify-center">
+                        <div class="relative">
+                            <div class="absolute -inset-4 bg-gradient-to-r from-primary to-secondary rounded-2xl opacity-20 blur-xl"></div>
+                            <img src="https://plus.unsplash.com/premium_photo-1676637656166-cb7b3a43b81a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8QUl8ZW58MHx8MHx8fDA%3D" 
+                                 alt="Ajay" 
+                                 class="relative w-64 h-64 rounded-2xl object-cover border-2 border-gray-800">
+                            <div class="absolute -bottom-4 -right-4 bg-gray-900 px-6 py-2 rounded-full border border-gray-800">
+                                <span class="text-sm font-medium">AI Specialist</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-2/3 lg:pl-12">
+                        <h3 class="text-2xl font-semibold mb-6">Transforming Ideas into Intelligent Systems</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            I'm Ajay, an AI Developer with a passion for creating intelligent systems that solve real-world problems. 
+                            My expertise spans machine learning, deep learning, and neural networks, with a focus on developing 
+                            scalable AI solutions that drive innovation.
+                        </p>
+                        <p class="text-gray-400 mb-8 leading-relaxed">
+                            With a background in computer science and years of hands-on experience, I bridge the gap between 
+                            theoretical research and practical applications. My work has powered everything from predictive 
+                            analytics to autonomous decision-making systems.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-user-tie text-white"></i>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400 text-sm">Name</span>
+                                    <p class="font-medium">Ajay Sivakumar</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400 text-sm">Email</span>
+                                    <p class="font-medium">akajay14955j@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone text-white"></i>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400 text-sm">Phone</span>
+                                    <p class="font-medium">+91 9585373509</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400 text-sm">Location</span>
+                                    <p class="font-medium">Chennai, India</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-900 text-gray-300 rounded-lg hover:bg-gray-800 transition duration-300">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-900 text-gray-300 rounded-lg hover:bg-blue-700 transition duration-300">
+                                <i class="fab fa-linkedin-in text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-900 text-gray-300 rounded-lg hover:bg-blue-400 transition duration-300">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-900 text-gray-300 rounded-lg hover:bg-pink-600 transition duration-300">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise" class="py-24 circuit-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center mb-16">
+                <div class="h-px bg-gradient-to-r from-transparent via-primary to-transparent flex-1"></div>
+                <h2 class="text-4xl font-bold mx-6 gradient-text">My Expertise</h2>
+                <div class="h-px bg-gradient-to-r from-transparent via-primary to-transparent flex-1"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <!-- AI/ML -->
+                <div class="card-glass rounded-xl p-8 hover:border-primary border border-gray-800 transition duration-300">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center mb-6 tech-icon">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">AI & Machine Learning</h3>
+                    <p class="text-gray-400 mb-4">
+                        Developing advanced machine learning models for predictive analytics, natural language processing, and computer vision applications.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-900 text-primary text-xs rounded-full">TensorFlow</span>
+                        <span class="px-3 py-1 bg-gray-900 text-primary text-xs rounded-full">PyTorch</span>
+                        <span class="px-3 py-1 bg-gray-900 text-primary text-xs rounded-full">Scikit-learn</span>
+                    </div>
+                </div>
+                
+                <!-- Deep Learning -->
+                <div class="card-glass rounded-xl p-8 hover:border-secondary border border-gray-800 transition duration-300">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center mb-6 tech-icon">
+                        <i class="fas fa-network-wired text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Deep Learning</h3>
+                    <p class="text-gray-400 mb-4">
+                        Building and optimizing neural networks including CNNs, RNNs, and Transformers for complex pattern recognition tasks.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-900 text-secondary text-xs rounded-full">Keras</span>
+                        <span class="px-3 py-1 bg-gray-900 text-secondary text-xs rounded-full">GANs</span>
+                        <span class="px-3 py-1 bg-gray-900 text-secondary text-xs rounded-full">AutoML</span>
+                    </div>
+                </div>
+                
+                <!-- Data Science -->
+                <div class="card-glass rounded-xl p-8 hover:border-primary border border-gray-800 transition duration-300">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center mb-6 tech-icon">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Data Science</h3>
+                    <p class="text-gray-400 mb-4">
+                        Extracting insights from complex datasets using statistical analysis, data visualization, and big data technologies.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-900 text-primary text-xs rounded-full">Pandas</span>
+                        <span class="px-3 py-1 bg-gray-900 text-primary text-xs rounded-full">NumPy</span>
+                        <span class="px-3 py-1 bg-gray-900 text-primary text-xs rounded-full">Spark</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-semibold mb-8 text-center">Technical Skills</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium">Python</span>
+                            <span class="text-sm text-gray-400">95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium">TensorFlow</span>
+                            <span class="text-sm text-gray-400">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium">PyTorch</span>
+                            <span class="text-sm text-gray-400">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium">Transformer</span>
+                            <span class="text-sm text-gray-400">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium">Computer Vision</span>
+                            <span class="text-sm text-gray-400">88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium">NLP</span>
+                            <span class="text-sm text-gray-400">82%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 82%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium">AWS/GCP</span>
+                            <span class="text-sm text-gray-400">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium">MultiModel</span>
+                            <span class="text-sm text-gray-400">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center mb-16">
+                <div class="h-px bg-gradient-to-r from-transparent via-primary to-transparent flex-1"></div>
+                <h2 class="text-4xl font-bold mx-6 gradient-text">AI Projects</h2>
+                <div class="h-px bg-gradient-to-r from-transparent via-primary to-transparent flex-1"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card h-96">
+                    <img src="https://images.unsplash.com/photo-1617791160536-598cf32026fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" 
+                         alt="Autonomous Vehicle System" 
+                         class="w-full h-full object-cover">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-semibold mb-2">The Self learning agent</h3>
+                        <p class="text-gray-300 text-sm mb-4">The Model that can learn continuously with the help of an AI agent</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">PyTorch</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">HuggingFace</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">LLaMa</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">SSL</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">PNN</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://arxiv.org/abs/2504.02489" class="text-primary hover:text-white text-sm flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                <span>Published Paper</span>
+                            </a>
+                            <a href="https://github.com/Aviation169/Self_learning_agent_with_a_PNN.git" class="text-gray-400 hover:text-white text-sm flex items-center">
+                                <i class="fab fa-github mr-2"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card h-96">
+                    <img src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fEFJfGVufDB8fDB8fHww" 
+                         alt="Medical Diagnosis AI" 
+                         class="w-full h-full object-cover">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-semibold mb-2">Operator AI Agent</h3>
+                        <p class="text-gray-300 text-sm mb-4">Operator AI is a platform for building autonomous AI agents that can automate workflows across browsers, APIs, and software tools.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-gray-900 text-secondary text-xs rounded-full">API</span>
+                            <span class="px-2 py-1 bg-gray-900 text-secondary text-xs rounded-full">Streamlit</span>
+                            <span class="px-2 py-1 bg-gray-900 text-secondary text-xs rounded-full">LLaMA</span>
+                            <span class="px-2 py-1 bg-gray-900 text-secondary text-xs rounded-full">Playwright</span>
+                            <span class="px-2 py-1 bg-gray-900 text-secondary text-xs rounded-full">Selenium</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/Aviation169/Operator_prototype.git" class="text-secondary hover:text-white text-sm flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                <span>About</span>
+                            </a>
+                            <a href="https://github.com/Aviation169/Operator_prototype.git" class="text-gray-400 hover:text-white text-sm flex items-center">
+                                <i class="fab fa-github mr-2"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card h-96">
+                    <img src="https://images.unsplash.com/photo-1602922960044-d48ce791d3c0?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8SW1nfGVufDB8fDB8fHww" 
+                         alt="Sentiment Analysis Engine" 
+                         class="w-full h-full object-cover">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-semibold mb-2">Simple Image Generation Model DCGAN</h3>
+                        <p class="text-gray-300 text-sm mb-4">A simple image generation model built using a Deep Convolutional GAN (DCGAN) architecture.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">Discriminator</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">Generator</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">Dataset</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/Aviation169/Img_Generation_model.git" class="text-primary hover:text-white text-sm flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                <span>About</span>
+                            </a>
+                            <a href="https://github.com/Aviation169/Img_Generation_model.git" class="text-gray-400 hover:text-white text-sm flex items-center">
+                                <i class="fab fa-github mr-2"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4-->
+                <div class="project-card h-96">
+                    <img src="https://plus.unsplash.com/premium_photo-1661761077411-d50cba031848?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8UmVzZWFyY2h8ZW58MHx8MHx8fDA%3D" 
+                         alt="Sentiment Analysis Engine" 
+                         class="w-full h-full object-cover">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-semibold mb-2">Research Agent Prototype</h3>
+                        <p class="text-gray-300 text-sm mb-4">A Research Agent is an AI tool that autonomously gathers, analyzes, and summarizes information to assist with research tasks.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">tkinter</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">LLM</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">API</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/Aviation169/Research_Agent_Prototype.git" class="text-primary hover:text-white text-sm flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                <span>About</span>
+                            </a>
+                            <a href="https://github.com/Aviation169/Research_Agent_Prototype.git" class="text-gray-400 hover:text-white text-sm flex items-center">
+                                <i class="fab fa-github mr-2"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </div> 
+                <!-- Project 5-->
+                <div class="project-card h-96">
+                    <img src="https://images.unsplash.com/photo-1545548171-37a54e5c1ea6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dHJhbnNmb3JtZXJ8ZW58MHx8MHx8fDA%3D" 
+                         alt="Sentiment Analysis Engine" 
+                         class="w-full h-full object-cover">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-semibold mb-2">Encoder Only Model</h3>
+                        <p class="text-gray-300 text-sm mb-4">This repository contains PyTorch implementations of encoder-only transformer architectures.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">Transformer</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">Attention is all you need</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">BERT</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/Aviation169/Encoder-Only-Models.git" class="text-primary hover:text-white text-sm flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                <span>About</span>
+                            </a>
+                            <a href="https://github.com/Aviation169/Encoder-Only-Models.git" class="text-gray-400 hover:text-white text-sm flex items-center">
+                                <i class="fab fa-github mr-2"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 6-->
+                <div class="project-card h-96">
+                    <img src="https://images.unsplash.com/photo-1693496481581-04d4ca819560?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8UkFHfGVufDB8fDB8fHww" 
+                         alt="Sentiment Analysis Engine" 
+                         class="w-full h-full object-cover">
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-semibold mb-2">Personal RAG</h3>
+                        <p class="text-gray-300 text-sm mb-4">A Streamlit-based web application implementing Retrieval-Augmented Generation (RAG) to answer questions about uploaded news content.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">PyPDF2</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">langchain</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">faiss</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">transformers</span>
+                            <span class="px-2 py-1 bg-gray-900 text-primary text-xs rounded-full">LLaMA</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/Aviation169/Personal---RAG.git" class="text-primary hover:text-white text-sm flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                <span>About</span>
+                            </a>
+                            <a href="https://github.com/Aviation169/Personal---RAG.git" class="text-gray-400 hover:text-white text-sm flex items-center">
+                                <i class="fab fa-github mr-2"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+            
+            <div class="text-center mt-16">
+                <a href="https://github.com/Aviation169?tab=repositories" class="px-8 py-3 border border-gray-700 hover:bg-gray-900 rounded-lg transition duration-300 inline-flex items-center">
+                    <i class="fab fa-github mr-2"></i>
+                    View All Projects
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 circuit-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center mb-16">
+                <div class="h-px bg-gradient-to-r from-transparent via-primary to-transparent flex-1"></div>
+                <h2 class="text-4xl font-bold mx-6 gradient-text">Let's Connect</h2>
+                <div class="h-px bg-gradient-to-r from-transparent via-primary to-transparent flex-1"></div>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/2">
+                    <div class="card-glass p-8 rounded-2xl">
+                        <h3 class="text-2xl font-semibold mb-6">Get in Touch</h3>
+                        <form id="contact-form">
+                            <div class="mb-6">
+                                <label for="name" class="block text-gray-400 mb-2 text-sm">Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white">
+                            </div>
+                            <div class="mb-6">
+                                <label for="email" class="block text-gray-400 mb-2 text-sm">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white">
+                            </div>
+                            <div class="mb-6">
+                                <label for="subject" class="block text-gray-400 mb-2 text-sm">Subject</label>
+                                <input type="text" id="subject" name="subject" class="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white">
+                            </div>
+                            <div class="mb-6">
+                                <label for="message" class="block text-gray-400 mb-2 text-sm">Message</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white"></textarea>
+                            </div>
+                            <button type="submit" class="w-full gradient-bg text-white py-4 rounded-lg hover:opacity-90 transition duration-300 flex items-center justify-center">
+                                <i class="fas fa-paper-plane mr-2"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="card-glass p-8 rounded-2xl h-full">
+                        <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                        <div class="space-y-8">
+                            <div class="flex items-start">
+                                <div class="gradient-bg p-3 rounded-lg mr-4">
+                                    <i class="fas fa-map-marker-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">Location</h4>
+                                    <p class="text-gray-400">Chennai, India</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="gradient-bg p-3 rounded-lg mr-4">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">Email</h4>
+                                    <p class="text-gray-400">akajay14955j@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="gradient-bg p-3 rounded-lg mr-4">
+                                    <i class="fas fa-phone text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">Phone</h4>
+                                    <p class="text-gray-400">+91 9585373509</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="gradient-bg p-3 rounded-lg mr-4">
+                                    <i class="fas fa-clock text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-1">Working Hours</h4>
+                                    <p class="text-gray-400">Mon-Fri: 9AM - 6PM IST</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-12">
+                            <h4 class="font-medium mb-4">Follow Me</h4>
+                            <div class="flex space-x-4">
+                                <a href="https://github.com/Aviation169" class="w-12 h-12 flex items-center justify-center bg-gray-900 text-gray-300 rounded-lg hover:bg-gray-800 transition duration-300">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                                <a href="linkedin.com/in/ajay-sivakumar" class="w-12 h-12 flex items-center justify-center bg-gray-900 text-gray-300 rounded-lg hover:bg-blue-700 transition duration-300">
+                                    <i class="fab fa-linkedin-in text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-900 text-gray-300 rounded-lg hover:bg-blue-400 transition duration-300">
+                                    <i class="fab fa-twitter text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-900 text-gray-300 rounded-lg hover:bg-pink-600 transition duration-300">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-800 grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-bold gradient-text tracking-tighter">AJAY_AI</a>
+                    <p class="text-gray-500 text-sm mt-2">Pushing the boundaries of artificial intelligence.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#home" class="text-gray-500 hover:text-white transition duration-300 text-sm">Home</a>
+                    <a href="#about" class="text-gray-500 hover:text-white transition duration-300 text-sm">About</a>
+                    <a href="#expertise" class="text-gray-500 hover:text-white transition duration-300 text-sm">Expertise</a>
+                    <a href="#projects" class="text-gray-500 hover:text-white transition duration-300 text-sm">Projects</a>
+                    <a href="#contact" class="text-gray-500 hover:text-white transition duration-300 text-sm">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Ajay Kumar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 gradient-bg text-white rounded-full shadow-lg hidden items-center justify-center hover:opacity-90 transition duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Highlight active navigation link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active-nav');
+                }
+            });
+            
+            // Show/hide back to top button
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('hidden');
+            } else {
+                backToTopBtn.classList.add('hidden');
+            }
+        });
+        
+        // Back to top button functionality
+        document.getElementById('back-to-top').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the form data to a server
+            // For this example, we'll just show an alert
+            alert(`Thank you, ${name}! Your message about "${subject}" has been received. I'll get back to you soon at ${email}.`);
+            
+            // Reset form
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
